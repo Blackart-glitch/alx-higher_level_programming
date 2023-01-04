@@ -1,53 +1,69 @@
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
 #include "lists.h"
+#include <stdlib.h>
 
 /**
- *  * main - check the code for ALX School students.
- *   *
- *    * Return: Always 0.
- *     */
-int main(void)
+ * _realloc - Reallocates a memory block
+ * @ptr: The pointer to the previous memory block
+ * @old_size: The size of the old memory block
+ * @new_size: The size of the new memory block
+ *
+ * Return: The pointer to the new memory block otherwise NULL
+ */
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
-	    listint_t *head;
-	        listint_t *current;
-		    listint_t *temp;
-		        int i;
+	void *new_ptr;
+	unsigned int min_size = old_size < new_size ? old_size : new_size;
+	unsigned int i;
 
-			    head = NULL;
-			        add_nodeint(&head, 0);
-				    add_nodeint(&head, 1);
-				        add_nodeint(&head, 2);
-					    add_nodeint(&head, 3);
-					        add_nodeint(&head, 4);
-						    add_nodeint(&head, 98);
-						        add_nodeint(&head, 402);
-							    add_nodeint(&head, 1024);
-							        print_listint(head);
+	if (new_size == old_size)
+		return (ptr);
+	if (ptr != NULL)
+	{
+		if (new_size == 0)
+		{
+			free(ptr);
+			return (NULL);
+		}
+		new_ptr = malloc(new_size);
+		if (new_ptr != NULL)
+		{
+			for (i = 0; i < min_size; i++)
+				*((char *)new_ptr + i) = *((char *)ptr + i);
+			free(ptr);
+			return (new_ptr);
+		}
+		free(ptr);
+		return (NULL);
+	}
+	else
+	{
+		new_ptr = malloc(new_size);
+		return (new_ptr);
+	}
+}
 
-								    if (check_cycle(head) == 0)
-									            printf("Linked list has no cycle\n");
-								        else if (check_cycle(head) == 1)
-										        printf("Linked list has a cycle\n");
 
-									    current = head;
-									        for (i = 0; i < 4; i++)
-											        current = current->next;
-										    temp = current->next;
-										        current->next = head;
 
-											    if (check_cycle(head) == 0)
-												            printf("Linked list has no cycle\n");
-											        else if (check_cycle(head) == 1)
-													        printf("Linked list has a cycle\n");
+/**
+ * check_cycle - checks if a singly linked list has a cycle in it
+ * @list: list head
+ * Return: 0 if no, 1 if yes
+ */
 
-												    current = head;
-												        for (i = 0; i < 4; i++)
-														        current = current->next;
-													    current->next = temp;
+int check_cycle(listint_t *list)
+{
+	listint_t *fast, *slow = list;
 
-													        free_listint(head);
+	if (list == NULL)
+		return (0);
 
-														    return (0);
+	fast = list->next;
+	while (slow != NULL && fast != NULL && fast->next != NULL)
+	{
+		if (slow == fast)
+			return (1);
+		fast = fast->next->next;
+		slow = slow->next;
+	}
+	return (0);
 }
