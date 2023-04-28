@@ -1,10 +1,10 @@
 # Resources
 Read or watch:
-```
+
 [HOWTO Fetch Internet Resources Using urllib Package](https://intranet.alxswe.com/rltoken/KoRrs5dVWsb-B82e-M1TQQ)
 [Quickstart with Requests package](https://intranet.alxswe.com/rltoken/OGcRGPr7TSWtzypDd0ZibQ)
 [Requests package](https://intranet.alxswe.com/rltoken/dUNaNQrV2bMSstILitQbXQ)
-```
+
 # Fetching Internet Resources with Python
 
 This repository is focused on how to fetch internet resources using Python. Specifically, covering how to use the urllib and requests packages, as well as to decode urllib body responses, make HTTP requests (GET, POST, PUT, etc.), fetch JSON resources, and manipulate data from an external service.
